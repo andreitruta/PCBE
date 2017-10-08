@@ -1,4 +1,4 @@
-package com.pcbe.cell;
+package com.pcbe.cell.manager;
 
 import com.pcbe.cell.Cell;
 
