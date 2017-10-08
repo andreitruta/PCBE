@@ -1,3 +1,6 @@
+package com.pcbe.resources;
+
+
 public class ResourceType {
     private String name;
     private NutritionValue nutritionValue;

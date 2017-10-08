@@ -1,3 +1,6 @@
+package com.pcbe.cell;
+
+import com.pcbe.cell.setup.CellConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

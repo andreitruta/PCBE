@@ -1,3 +1,5 @@
+package com.pcbe.resources;
+
 import java.util.List;
 
 public class Resources {

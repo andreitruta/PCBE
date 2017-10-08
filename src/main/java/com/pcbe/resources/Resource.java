@@ -1,3 +1,5 @@
+package com.pcbe.resources;
+
 /**
  * A resource is food consumed by cells. (Immutable)
  */
