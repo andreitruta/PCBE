@@ -1,3 +1,5 @@
+package com.pcbe.cell.setup;
+
 public class CellConfig {
     public static int FULL_TIME_SECONDS;
     public static int STARVE_TIME_SECONDS;

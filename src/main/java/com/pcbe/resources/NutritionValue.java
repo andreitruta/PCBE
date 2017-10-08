@@ -1,3 +1,5 @@
+package com.pcbe.resources;
+
 public class NutritionValue {
     private float value;
 
