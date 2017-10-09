@@ -21,14 +21,16 @@ public class CellManager {
     }
 
     public void addCell(Cell cell) {
+        lock.lock();
         this.cells.add(cell);
+        lock.unlock();
     }
 
     public List<Cell> getCells() {
         return this.cells;
     }
 
-    public ReentrantLock getDeathLock() {
+    public ReentrantLock getCellsLock() {
         return this.lock;
     }
 }
