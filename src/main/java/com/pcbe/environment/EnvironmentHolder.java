@@ -6,6 +6,7 @@ import com.pcbe.cell.setup.CellConfig;
 import com.pcbe.resources.Resource;
 import com.pcbe.resources.ResourceType;
 import com.pcbe.resources.Resources;
+import com.pcbe.resources.ResourcesLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,7 @@ public class EnvironmentHolder {
 
     public EnvironmentHolder() {
         resources = new LinkedList<>();
+        resourceTypes = ResourcesLoader.loadResourcesTypes();
         cellManager = new CellManager();
         generateResources();
         LOG.info("Instantitated EnvironmentHolder");

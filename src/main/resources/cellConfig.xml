@@ -1,0 +1,4 @@
+<cellConfig>
+    <fullTimeSeconds>1</fullTimeSeconds>
+    <starveTimeSeconds>3</starveTimeSeconds>
+</cellConfig>

@@ -1,5 +1,9 @@
 package com.pcbe.resources;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
+
+@XmlRootElement
 public class NutritionValue {
     private float value;
 
@@ -7,6 +11,7 @@ public class NutritionValue {
         return value;
     }
 
+    @XmlValue
     public void setValue(float value) {
         this.value = value;
     }

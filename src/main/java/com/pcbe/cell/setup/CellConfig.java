@@ -1,5 +1,9 @@
 package com.pcbe.cell.setup;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class CellConfig {
     public static int FULL_TIME_SECONDS;
     public static int STARVE_TIME_SECONDS;
@@ -8,6 +12,7 @@ public class CellConfig {
         return FULL_TIME_SECONDS;
     }
 
+    @XmlElement(name = "fullTimeSeconds")
     public void setFullTimeSeconds(int seconds) {
         FULL_TIME_SECONDS = seconds;
     }
@@ -16,6 +21,7 @@ public class CellConfig {
         return STARVE_TIME_SECONDS;
     }
 
+    @XmlElement(name = "starveTimeSeconds")
     public void setStarveTimeSeconds(int seconds) {
         STARVE_TIME_SECONDS = seconds;
     }
