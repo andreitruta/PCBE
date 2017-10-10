@@ -49,7 +49,8 @@ public class EnvironmentHolder {
         try {
             if(resources.isEmpty()) {
                 LOG.debug("Cell " + cell + ": No food available, waiting...");
-                if(!foodPresentCondition.await(CellConfig.STARVE_TIME_SECONDS, TimeUnit.SECONDS)) {
+                int randomInt = new Random().nextInt(10);
+                if(!foodPresentCondition.await((CellConfig.STARVE_TIME_SECONDS*1000)+randomInt, TimeUnit.MILLISECONDS)) {
                     LOG.debug("Cell " + cell + ": Ran out of time for food...");
                     cell.die();
                     return;
