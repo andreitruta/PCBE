@@ -6,6 +6,7 @@ import com.pcbe.cell.setup.CellConfig;
 import com.pcbe.resources.Resource;
 import com.pcbe.resources.ResourceType;
 import com.pcbe.resources.Resources;
+import com.pcbe.resources.ResourcesLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,11 +27,12 @@ public class EnvironmentHolder {
     private Condition foodPresentCondition = resourcesLock.newCondition();
     private Resources resourceTypes;
     //TODO Move to config file
-    public int MAX_RESOURCE = 5;
+    public int MAX_RESOURCE = 15;
     private final AtomicInteger cellCount = new AtomicInteger(0);
 
     public EnvironmentHolder() {
         resources = new LinkedList<>();
+        resourceTypes = ResourcesLoader.loadResourcesTypes();
         cellManager = new CellManager();
         generateResources();
         LOG.info("Instantitated EnvironmentHolder");
@@ -47,13 +49,11 @@ public class EnvironmentHolder {
         try {
             if(resources.isEmpty()) {
                 LOG.debug("Cell " + cell + ": No food available, waiting...");
-                if(!foodPresentCondition.await(CellConfig.STARVE_TIME_SECONDS, TimeUnit.SECONDS)) {
+                int randomInt = new Random().nextInt(10);
+                if(!foodPresentCondition.await((CellConfig.STARVE_TIME_SECONDS*1000)+randomInt, TimeUnit.MILLISECONDS)) {
                     LOG.debug("Cell " + cell + ": Ran out of time for food...");
-                    //Check again if there are no resources
-                    if(resources.isEmpty()) {
-                        cell.die();
-                        return;
-                    }
+                    cell.die();
+                    return;
                 }
                 LOG.debug("Cell " + cell + ": Wait over");
             }
@@ -67,14 +67,11 @@ public class EnvironmentHolder {
     }
 
     public void generateFood(Cell cell) {
-        LOG.debug("generateFood: Cell " + cell + " trying to acquire res lock.");
-        while(!resourcesLock.tryLock()) {
-            //Acquire lock by any means
-            //This breaks the fairness
-        }
-        LOG.debug("generateFood: Cell " + cell + " acquired res lock.");
+        //LOG.debug("generateFood: Cell " + cell + " trying to acquire res lock.");
+        resourcesLock.lock();
+        //LOG.debug("generateFood: Cell " + cell + " acquired res lock.");
         try {
-            LOG.debug("Generating food from cell " + cell);
+            //LOG.debug("Generating food from cell " + cell);
             //TODO Use cell for determining
             int randomInt = new Random().nextInt(5);
             int randomResInt = new Random().nextInt(resourceTypes.getResourceList().size());
@@ -83,14 +80,13 @@ public class EnvironmentHolder {
 
             for (int i = 0; i < randomInt; i++) {
                 resources.add(new Resource(resourceTypes.getResourceList().get(randomResInt)));
+                foodPresentCondition.signal();
             }
-            foodPresentCondition.signalAll();
             LOG.info("Generated " + randomInt + " units of resources. Total: " + resources.size());
         } finally {
-            LOG.debug("Sent food notification");
+            resourcesLock.unlock();
         }
-        resourcesLock.unlock();
-        LOG.debug("generateFood: Cell " + cell + " released res lock.\n");
+        //LOG.debug("generateFood: Cell " + cell + " released res lock.\n");
     }
 
     public void generateResources() {

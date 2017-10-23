@@ -8,6 +8,7 @@ import com.pcbe.resources.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Random;
 import java.util.TimerTask;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -41,7 +42,9 @@ public abstract class Cell implements Runnable {
     public void run() {
         try {
             while (isAlive) {
-                Thread.sleep(fullTime);
+                int randomInt = new Random().nextInt(10);
+                //LOG.debug(this + " sleep");
+                Thread.sleep(fullTime + randomInt);
                 /*
                  * Request food after fullTimer expires
                  * If not received after starvationTime, die
