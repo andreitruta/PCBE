@@ -73,10 +73,8 @@ public class EnvironmentHolder {
         try {
             //LOG.debug("Generating food from cell " + cell);
             //TODO Use cell for determining
-            int randomInt = new Random().nextInt(5);
+            int randomInt = new Random().nextInt(5) + 1;
             int randomResInt = new Random().nextInt(resourceTypes.getResourceList().size());
-            if (randomInt == 0)
-                randomInt = 1;
 
             for (int i = 0; i < randomInt; i++) {
                 resources.add(new Resource(resourceTypes.getResourceList().get(randomResInt)));
